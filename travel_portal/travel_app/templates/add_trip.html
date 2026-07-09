@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Add Trip
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-8">
+
+        <div class="card shadow border-0 rounded-4">
+
+            <div class="card-body p-5">
+
+                <h2 class="text-center text-primary mb-4">
+                    Share Your Journey
+                </h2>
+
+                <form method="POST" enctype="multipart/form-data">
+
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+
+                        <label class="form-label">Trip Title</label>
+
+                        <input type="text"
+                               name="title"
+                               class="form-control"
+                               required>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">Destination</label>
+
+                        <input type="text"
+                               name="destination"
+                               class="form-control"
+                               required>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">Hotel Name</label>
+
+                        <input type="text"
+                               name="hotel_name"
+                               class="form-control">
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">Places Visited</label>
+
+                        <textarea class="form-control"
+                                  rows="3"
+                                  name="places_visited"></textarea>
+
+                    </div>
+
+                    <div class="mb-3">
+
+                        <label class="form-label">Trip Description</label>
+
+                        <textarea class="form-control"
+                                  rows="5"
+                                  name="description"
+                                  required></textarea>
+
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                Travel Cost
+                            </label>
+
+                            <input type="number"
+                                   name="travel_cost"
+                                   class="form-control">
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                Hotel Cost
+                            </label>
+
+                            <input type="number"
+                                   name="hotel_cost"
+                                   class="form-control">
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                Food Cost
+                            </label>
+
+                            <input type="number"
+                                   name="food_cost"
+                                   class="form-control">
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label class="form-label">
+                                Other Cost
+                            </label>
+
+                            <input type="number"
+                                   name="other_cost"
+                                   class="form-control">
+
+                        </div>
+
+                    </div>
+
+                    <div class="mb-4">
+
+                        <label class="form-label">
+                            Cover Image
+                        </label>
+
+                        <input type="file"
+                               name="image"
+                               class="form-control">
+
+                    </div>
+
+                    <div class="d-grid">
+
+                        <button class="btn btn-primary btn-lg">
+
+                            Publish Trip
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

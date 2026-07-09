@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Explore Trips
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="text-center mb-5">
+
+        <h1 class="fw-bold">
+            Explore Trips
+        </h1>
+
+        <p class="text-secondary">
+            Discover travel experiences shared by our community.
+        </p>
+
+    </div>
+
+    <div class="row g-4">
+
+        {% for trip in trips %}
+
+<div class="col-lg-4 col-md-6">
+
+    <div class="card h-100 shadow border-0 rounded-4">
+
+        {% if trip.image %}
+            <img src="{{ trip.image.url }}"
+                 class="card-img-top"
+                 style="height:230px; object-fit:cover;"
+                 alt="{{ trip.title }}">
+        {% else %}
+            <img src="https://placehold.co/600x400?text=No+Image"
+                 class="card-img-top"
+                 style="height:230px; object-fit:cover;">
+        {% endif %}
+
+        <div class="card-body">
+
+                    <h4 class="fw-bold">
+                        {{ trip.title }}
+                    </h4>
+
+                    <p class="text-secondary mb-1">
+                        📍 {{ trip.destination }}
+                    </p>
+
+                    <p class="mb-1">
+                        🏨 {{ trip.hotel_name }}
+                    </p>
+
+                    <p class="text-primary fw-bold">
+                        ₹ {{ trip.total_cost }}
+                    </p>
+
+                    <small class="text-muted">
+                        Shared by {{ trip.user.username }}
+                    </small>
+
+                </div>
+
+                <div class="card-footer bg-white border-0">
+
+                    <a href="{% url 'view_trip' trip.id %}"
+                    class="btn btn-primary w-100">
+
+                        View Trip
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="col-12">
+
+            <div class="alert alert-info text-center">
+
+                No trips have been shared yet.
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

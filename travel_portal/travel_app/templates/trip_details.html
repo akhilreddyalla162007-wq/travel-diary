@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ trip.title }}
+{% endblock %}
+
+{% block content %}
+
+<div class="container my-5">
+
+    <div class="card shadow border-0 rounded-4">
+
+        {% if trip.image %}
+            <img src="{{ trip.image.url }}"
+                 class="card-img-top"
+                 style="height:500px; object-fit:cover;"
+                 alt="{{ trip.title }}">
+        {% endif %}
+
+        <div class="card-body p-5">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <h1 class="fw-bold">
+                        {{ trip.title }}
+                    </h1>
+
+                    <h5 class="text-secondary">
+                        📍 {{ trip.destination }}
+                    </h5>
+
+                </div>
+
+                <span class="badge bg-primary fs-5 p-3">
+
+                    ₹ {{ trip.total_cost }}
+
+                </span>
+
+            </div>
+
+            <hr>
+
+            <div class="row mt-4">
+
+                <div class="col-md-6">
+
+                    <h4>🏨 Hotel</h4>
+
+                    <p>{{ trip.hotel_name }}</p>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <h4>👤 Shared By</h4>
+
+                    <p>{{ trip.user.username }}</p>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            <h4>📝 Travel Experience</h4>
+
+            <p>
+                {{ trip.description }}
+            </p>
+
+            <hr>
+
+            <h4>📍 Places Visited</h4>
+
+            <p>
+                {{ trip.places_visited }}
+            </p>
+
+            <hr>
+
+            <h4>💰 Expense Details</h4>
+
+            <table class="table table-bordered">
+
+                <tr>
+                    <th>Travel Cost</th>
+                    <td>₹ {{ trip.travel_cost }}</td>
+                </tr>
+
+                <tr>
+                    <th>Hotel Cost</th>
+                    <td>₹ {{ trip.hotel_cost }}</td>
+                </tr>
+
+                <tr>
+                    <th>Food Cost</th>
+                    <td>₹ {{ trip.food_cost }}</td>
+                </tr>
+
+                <tr>
+                    <th>Other Cost</th>
+                    <td>₹ {{ trip.other_cost }}</td>
+                </tr>
+
+                <tr class="table-primary">
+
+                    <th>Total Cost</th>
+
+                    <th>₹ {{ trip.total_cost }}</th>
+
+                </tr>
+
+            </table>
+
+            <div class="mt-4">
+
+                <a href="{% url 'explore' %}"
+                   class="btn btn-secondary">
+
+                    Back to Explore
+
+                </a>
+
+                {% if request.user == trip.user %}
+
+                <a href="{% url 'edit_trip' trip.id %}"
+                   class="btn btn-warning">
+
+                    Edit Trip
+
+                </a>
+
+                <a href="{% url 'delete_trip' trip.id %}"
+                   class="btn btn-danger">
+
+                    Delete Trip
+
+                </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

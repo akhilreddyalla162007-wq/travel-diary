@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block title %}
+My Trips
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h2 class="fw-bold">
+                My Trips
+            </h2>
+
+            <p class="text-secondary">
+                All the travel experiences you have shared.
+            </p>
+
+        </div>
+
+        <a href="{% url 'add_trip' %}"
+           class="btn btn-primary">
+
+            + Add New Trip
+
+        </a>
+
+    </div>
+
+    <div class="row g-4">
+
+        {% for trip in trips %}
+
+        <div class="col-lg-4 col-md-6">
+
+            <div class="card shadow-sm border-0 h-100 rounded-4">
+
+                {% if trip.image %}
+
+                <img src="{{ trip.image.url }}"
+                     class="card-img-top"
+                     style="height:220px; object-fit:cover;">
+
+                {% endif %}
+
+                <div class="card-body">
+
+                    <h4>
+
+                        {{ trip.title }}
+
+                    </h4>
+
+                    <p class="text-secondary">
+
+                        📍 {{ trip.destination }}
+
+                    </p>
+
+                    <p>
+
+                        🏨 {{ trip.hotel_name }}
+
+                    </p>
+
+                    <p class="text-primary fw-bold">
+
+                        ₹ {{ trip.total_cost }}
+
+                    </p>
+
+                    <small class="text-muted">
+
+                        {{ trip.created_at|date:"d M Y" }}
+
+                    </small>
+
+                </div>
+
+                    <div class="card-footer bg-white border-0">
+
+                        <div class="d-grid gap-2">
+
+                            <a href="{% url 'trip_details' trip.id %}"
+                            class="btn btn-primary">
+
+                                <i class="bi bi-eye-fill"></i>
+                                View Trip
+
+                            </a>
+
+                          <a href="{% url 'edit_trip' trip.id %}"
+                            class="btn btn-warning text-white">
+
+                               <i class="bi bi-pencil-square"></i>
+                                Edit Trip
+
+                            </a>
+
+                            <a href="{% url 'delete_trip' trip.id %}"
+                            class="btn btn-danger">
+
+                                <i class="bi bi-trash-fill"></i>
+                                Delete Trip
+
+                            </a>
+
+                             </div>
+
+                        </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% empty %}
+
+        <div class="col-12">
+
+            <div class="alert alert-info text-center">
+
+                You haven't shared any trips yet.
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,350 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home | Travel Diary
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+
+<div class="p-5 mb-5 bg-white rounded-4 shadow-sm">
+
+    <div class="row align-items-center">
+
+        <div class="col-lg-7">
+
+            <span class="badge bg-primary-subtle text-primary mb-3 px-3 py-2">
+                🌍 Travel Experience Platform
+            </span>
+
+            <h1 class="display-4 fw-bold">
+                Every Journey Has a Story.
+            </h1>
+
+            <p class="lead text-secondary my-4">
+                Share your travel experiences, recommend hotels,
+                showcase amazing places, and help fellow travelers
+                plan their perfect trip with real budgets and honest reviews.
+            </p>
+
+            <div class="d-flex gap-3">
+
+                <a href="{% url 'explore' %}" class="btn btn-primary btn-lg">
+                    Explore Trips
+                </a>
+
+                {% if user.is_authenticated %}
+
+                <a href="{% url 'add_trip' %}" class="btn btn-outline-primary btn-lg">
+                    Add Your Trip
+                </a>
+
+                {% else %}
+
+                <a href="{% url 'login' %}" class="btn btn-outline-primary btn-lg">
+                    Login to Share
+                </a>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-5 text-center">
+
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=700"
+                 class="img-fluid rounded-4 shadow"
+                 alt="Travel">
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Search -->
+
+<div class="card border-0 shadow-sm mb-5">
+
+    <div class="card-body">
+
+        <form method="GET">
+
+            <div class="row g-3">
+
+                <div class="col-md-10">
+
+                    <input
+                        type="text"
+                        name="search"
+                        value="{{ search }}"
+                        class="form-control form-control-lg"
+                        placeholder="Search by trip title, destination, hotel or place...">
+
+                </div>
+
+                <div class="col-md-2 d-grid">
+
+                    <button class="btn btn-primary btn-lg">
+
+                        Search
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- Latest Trips -->
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    {% if search %}
+
+        <div>
+
+            <h2 class="fw-bold">
+
+                Search Results
+
+            </h2>
+
+            <p class="text-secondary mb-0">
+
+                Showing results for "<strong>{{ search }}</strong>"
+
+            </p>
+
+        </div>
+
+        <a href="{% url 'home' %}"
+           class="btn btn-outline-secondary">
+
+            Clear Search
+
+        </a>
+
+    {% else %}
+
+        <h2 class="fw-bold">
+
+            Latest Trips
+
+        </h2>
+
+        <a href="{% url 'explore' %}"
+           class="btn btn-outline-primary">
+
+            View All
+
+        </a>
+
+    {% endif %}
+
+</div>
+
+<div class="row g-4">
+
+{% for trip in trips %}
+
+<div class="col-lg-4 col-md-6">
+
+    <div class="card h-100 shadow-sm border-0 rounded-4">
+
+        {% if trip.image %}
+
+        <img src="{{ trip.image.url }}"
+             class="card-img-top"
+             style="height:230px; object-fit:cover;"
+             alt="{{ trip.title }}">
+
+        {% else %}
+
+        <img src="https://placehold.co/600x400?text=No+Image"
+             class="card-img-top"
+             style="height:230px; object-fit:cover;">
+
+        {% endif %}
+
+        <div class="card-body">
+
+            <span class="badge bg-success">
+
+                ₹ {{ trip.total_cost }}
+
+            </span>
+
+            <h4 class="mt-3">
+
+                {{ trip.title }}
+
+            </h4>
+
+            <p class="text-secondary">
+
+                📍 {{ trip.destination }}
+
+            </p>
+
+            <p class="text-muted">
+
+                {{ trip.description|truncatewords:18 }}
+
+            </p>
+
+            <small class="text-secondary">
+
+                Shared by {{ trip.user.username }}
+
+            </small>
+
+        </div>
+
+        <div class="card-footer bg-white border-0">
+
+            <a href="{% url 'view_trip' trip.id %}"
+               class="btn btn-outline-primary w-100">
+
+                Read Story
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% empty %}
+
+<div class="col-12">
+
+    <div class="alert alert-info text-center">
+
+        {% if search %}
+
+        <h5>No matching trips found.</h5>
+
+        <p class="mb-0">
+
+            No trips matched "<strong>{{ search }}</strong>".
+
+        </p>
+
+        {% else %}
+
+        <h5>No trips available.</h5>
+
+        <p class="mb-0">
+
+            Be the first traveler to share your journey.
+
+        </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+<!-- Why Travel Diary -->
+
+<div class="mt-5 p-5 bg-white rounded-4 shadow-sm">
+
+    <h2 class="fw-bold text-center mb-5">
+
+        Why Travel Diary?
+
+    </h2>
+
+    <div class="row text-center">
+
+        <div class="col-md-3">
+
+            <div class="display-5">🏨</div>
+
+            <h5 class="mt-3">
+
+                Hotel Reviews
+
+            </h5>
+
+            <p class="text-secondary">
+
+                Discover genuine hotel experiences from real travelers.
+
+            </p>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="display-5">📍</div>
+
+            <h5 class="mt-3">
+
+                Places Visited
+
+            </h5>
+
+            <p class="text-secondary">
+
+                Explore attractions worth adding to your itinerary.
+
+            </p>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="display-5">💰</div>
+
+            <h5 class="mt-3">
+
+                Trip Budget
+
+            </h5>
+
+            <p class="text-secondary">
+
+                Plan smarter with complete travel expense details.
+
+            </p>
+
+        </div>
+
+        <div class="col-md-3">
+
+            <div class="display-5">⭐</div>
+
+            <h5 class="mt-3">
+
+                Honest Reviews
+
+            </h5>
+
+            <p class="text-secondary">
+
+                Learn from authentic experiences shared by the community.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
